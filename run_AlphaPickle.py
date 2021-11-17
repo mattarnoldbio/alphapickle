@@ -79,3 +79,4 @@ if __name__ == '__main__':
     
     print("Processing complete!")
     print("Data saved to output directory")
+    print("If you use AlphaPickle in your work (during analysis, or for plots that end up in publications), please cite AlphaPickle as follows: Arnold, M. J. (2021) AlphaPickle doi.org/10.5281/zenodo.5708709")
