@@ -19,3 +19,5 @@ ALPHAPICKLE is a programme for extracting the outputs of DeepMind's ALPHAFOLD pr
 # Citation
 
 - If you use AlphaPickle in your work (during analysis, or for plots that end up in publications), please cite AlphaPickle as follows: Arnold, M. J. (2021) AlphaPickle doi.org/10.5281/zenodo.5708709
+
+[![DOI](https://zenodo.org/badge/429171188.svg)](https://zenodo.org/badge/latestdoi/429171188)
