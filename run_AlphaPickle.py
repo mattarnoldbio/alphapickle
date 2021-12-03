@@ -1,9 +1,9 @@
 ### AlphaPickle ###
-### Version 1.2.2 ###
+### Version 1.4.1 ###
 ### Author: Matt Arnold ###
 # AlphaPickle extracts results metadata from pickle (.pkl) files created by DeepMind's AlphaFold (Jumper et al., 2021, doi: 10.1038/s41586-021-03819-2)
 # For detailed usage and installation instructions, please consult README.alphapickle
-# New in this version: pLDDT plotting; improved plotting aesthetic
+# New in this version: bug fix @ AlphaPickle.py-line163
 
 # Copyright (C) 2021  Matt Arnold
 
@@ -28,7 +28,7 @@ from sys import exit
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="AlphaPickle\n"
-    "Version 1.4.0\n"
+    "Version 1.4.1\n"
     "Input an AlphaFold result_model_x.pkl metadata file or a directory containing all output models and a ranking_debug.json file and generate \n"
     "a PAE plot (if pTM models were used), a pLDDT plot and a ChimeraX attribute file \n"
     "containing pLDDT data. Both of these metrics are also exported to \n"

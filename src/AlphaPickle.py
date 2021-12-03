@@ -1,9 +1,9 @@
 ### AlphaPickle ###
-### Version 1.3.0 ###
+### Version 1.4.1 ###
 ### Author: Matt Arnold ###
 # AlphaPickle extracts results metadata from pickle (.pkl) files created by DeepMind's AlphaFold (Jumper et al., 2021, doi: 10.1038/s41586-021-03819-2)
 # For detailed usage and installation instructions, please consult README.alphapickle
-# New in this version: pLDDT plotting; improved plotting aesthetic
+# New in this version: bug fix @ AlphaPickle.py-line163
 
 # Copyright (C) 2021  Matt Arnold
 
@@ -159,7 +159,7 @@ class AlphaFoldPickle:
 
             # Iterate over rows of dataframe, writing residue ID and lDDT value to file with correct formatting
             for i,row in lDDT_table.iterrows():
-                openfile.write("\t{}\t{}\n".format(row['Numbering'],row['lDDT']))
+                openfile.write("\t{}\t{}\n".format(row['Numbering'],row['pLDDT']))
 
         return pd_lDDT
 
