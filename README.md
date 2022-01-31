@@ -11,6 +11,11 @@ ALPHAPICKLE is a programme for extracting the outputs of DeepMind's ALPHAFOLD pr
 # Use
 
 - The program has two basic options: input a single metadata file (by issuing the the absolute path to the file with the flag -pf), or process metadata for all models output by a run of AlphaFold (by issuing the absolute path to the results directory, which must contain both the ranking_debug.json file and all of the result_model*.pkl files). For each metadata file processed, the outputs (plots and tables of pLDDT and PAE, as well as a ChimeraX attribute file for pLDDT) are saved to the same directory as the input files.
+- Usage examples:
+    - To process all metadata files in an AlphaFold results directory (recommended; requires that directory also contains raking_debug.json file): `python3 run_AlphaPickle.py -od /absolute/path/to/output/directory`
+    - To process a specific file: `python3 run_AlphaPickle.py -pf /absolute/path/to/pickle/file`
+    - n.b. If `python3` does not point to your system's binary executable file for Python 3, replace `python3` in the above commands with this. This software has only been tested with Python 3.9.5 and support for other versions of Python is not guaranteed.
+
 - In addition to the basic options, advanced options for tinkering with the dimensions/scaling of plots are provided. Details are available on issuing run_AlphaPickle.py -h. If the plot is not sufficient after adjusting these parameters, the user may find it easier to recreate the plot from the outputted csv files. 
 
 # Install
