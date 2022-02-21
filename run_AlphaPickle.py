@@ -37,6 +37,7 @@ if __name__ == '__main__':
     parser.add_argument("-od","--output_directory", help='Path to AlphaFold output directory', default=None)
     parser.add_argument("-pf","--pickle_file", help='Filename of metadata file for processing.', default=None)
     parser.add_argument("-ff","--fasta_file", help='Optional. Filename of fasta sequence file used for AlphaFold prediction.', default=None)
+    parser.add_argument("-pdb","--pdb_file", help='Optional. Provide the absolute file path of an AlphaFold PDB file (v2.0.1 or later) to produce a pLDDT plot fomr the b-factor column', default=None)
     parser.add_argument("-ps","--plot_size", help='Optional (Default = 12). Change size (in inches) of plots. This may be useful for very short or long input sequences', default=12)
     parser.add_argument("-pi","--plot_increment", help='Optional (Default = 100). Change the increment of plot axis labels using residue numbering. This may be useful for very short or long input sequences', default=100)
     args = parser.parse_args()
@@ -51,10 +52,10 @@ if __name__ == '__main__':
                                  
     """)
 
-    if (args.output_directory and args.pickle_file) or (not args.output_directory and not args.pickle_file):
-        exit("Incorrect combination of files provided. Please check inputs contain exactly one of pickle_file and output_directory")
+    # if (args.output_directory and args.pickle_file) or (not args.output_directory and not args.pickle_file):
+    #     exit("Incorrect combination of files provided. Please check inputs contain exactly one of pickle_file and output_directory")
 
-    if args.pickle_file and not args.output_directory:
+    if args.pickle_file and not args.output_directory and not args.pdb_file:
         print("Processing 1 metadata file {}".format(args.pickle_file))
         print("\n")
         results = ap.AlphaFoldPickle(args.pickle_file,args.fasta_file)
@@ -63,7 +64,7 @@ if __name__ == '__main__':
         if type(results.PAE) == np.ndarray:
             results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
     
-    if args.output_directory and not args.pickle_file:
+    if args.output_directory and not args.pickle_file and not args.pdb_file:
         rankings = ap.AlphaFoldJson(args.output_directory).RankingDebug
         print("Batch processing {} ranked models, based on {}/ranking_debug.json".format(len(rankings),args.output_directory))
         print("\n")
@@ -75,8 +76,10 @@ if __name__ == '__main__':
             if type(results.PAE) == np.ndarray:
                 results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
             print("\n")
+    if args.pdb_file and not args.pickle_file and not args.output_directory:
+        results = ap.AlphaFoldPDB(args.pdb_file)
+        results.plot_pLDDT(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
 
-    
     print("Processing complete!")
     print("Data saved to output directory")
     print("If you use AlphaPickle in your work (during analysis, or for plots that end up in publications), please cite AlphaPickle as follows: Arnold, M. J. (2021) AlphaPickle doi.org/10.5281/zenodo.5708709")

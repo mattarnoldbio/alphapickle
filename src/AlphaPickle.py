@@ -27,15 +27,67 @@ import pandas as pd
 from matplotlib import pyplot as plt ,colors as cols ,cm as cm
 import json
 from sys import exit
+from Bio import PDB as pdb
+
 
 # Define class for AlphaFold metadata file and class methods
-class AlphaFoldPickle:
+class AlphaFoldMetaData(object):
     def __init__(self, PathToFile, FastaSequence=None, ranking=None):
         # Define attributes
         self.PathToFile = PathToFile
         self.FastaSequence = FastaSequence
         self.saving_filename = self.PathToFile.split("/")[-1].split(".")[0]
         self.saving_pathname = self.PathToFile.split(self.saving_filename)[0]
+        if ranking:
+            self.saving_filename = "ranked_{}".format(ranking)
+
+
+     # Generate a plot of pLDDT value
+    def plot_pLDDT(self, size_in_inches=12, axis_label_increment=100):
+        x = list(range(0,len(self.pLDDT),1))
+        y = list(self.pLDDT)
+
+        # Use standard AlphaFold colors 
+        cmap = cols.LinearSegmentedColormap.from_list("", ["red","orange","yellow","cornflowerblue","blue"])
+
+        plt.figure(figsize=(size_in_inches,(size_in_inches/2)))
+        ticks = np.arange(0, len(self.pLDDT), axis_label_increment)
+        plt.xticks(ticks, fontname="Helvetica")
+        plt.yticks(fontname="Helvetica")
+        plt.xlabel("Residue index", size=14, fontweight="bold", fontname="Helvetica")
+        plt.ylabel("Predicted LDDT",size=14, fontweight="bold", fontname="Helvetica")
+        plt.scatter(x,y, c=y, cmap=cmap, s=5) 
+        plt.clim(0,100)
+        scale = plt.colorbar(shrink=0.5)
+        scale.set_label(label="Predicted LDDT",size=12, fontweight="bold", fontname="Helvetica")
+        # Save to directory with pickle file in
+        plt.savefig('{}/{}_pLDDT.png'.format(self.saving_pathname, self.saving_filename), dpi=300)
+
+        # Generate a plot from PAE measurements
+    def plot_PAE(self, size_in_inches=12, axis_label_increment=100):
+        ticks = np.arange(0, self.PAE[1].size, axis_label_increment)
+        plt.figure(figsize=(size_in_inches,size_in_inches))
+        PAE = plt.imshow(self.PAE)
+        plt.xticks(ticks, fontname="Helvetica")
+        plt.yticks(ticks, fontname="Helvetica")
+        plt.xlabel("Residue index", size=14, fontweight="bold", fontname="Helvetica")
+        plt.ylabel("Residue index", size=14, fontweight="bold", fontname="Helvetica")
+        scale = plt.colorbar(PAE, shrink=0.5)
+        scale.set_label(label="Predicted error (Å)",size=12, fontweight="bold", fontname="Helvetica")
+        
+        # Save plot
+        plt.savefig('{}/{}_PAE.png'.format(self.saving_pathname, self.saving_filename),dpi=300)
+
+        # Generate dataframe from PAE data and save to csv
+        pd_PAE = pd.DataFrame(self.PAE)
+        pd_PAE.to_csv('{}/{}_PAE.csv'.format(self.saving_pathname, self.saving_filename))
+
+
+class AlphaFoldPickle(AlphaFoldMetaData):
+
+    def __init__(self, PathToFile, FastaSequence=None, ranking=None):
+        super().__init__(PathToFile, ranking)
+        # Define attributes
         if ranking:
             self.saving_filename = "ranked_{}".format(ranking)
         self.data = []
@@ -59,26 +111,7 @@ class AlphaFoldPickle:
         # Define pLDDT
         self.pLDDT = self.data[0]['plddt']
 
-    # Generate a plot from PAE measurements
-    def plot_PAE(self, size_in_inches=12, axis_label_increment=100):
-        ticks = np.arange(0, self.PAE[1].size, axis_label_increment)
-        plt.figure(figsize=(size_in_inches,size_in_inches))
-        PAE = plt.imshow(self.PAE)
-        plt.xticks(ticks, fontname="Helvetica")
-        plt.yticks(ticks, fontname="Helvetica")
-        plt.xlabel("Residue index", size=14, fontweight="bold", fontname="Helvetica")
-        plt.ylabel("Residue index", size=14, fontweight="bold", fontname="Helvetica")
-        scale = plt.colorbar(PAE, shrink=0.5)
-        scale.set_label(label="Predicted error (Å)",size=12, fontweight="bold", fontname="Helvetica")
-        
-        # Save plot
-        plt.savefig('{}/{}_PAE.png'.format(self.saving_pathname, self.saving_filename),dpi=300)
 
-        # Generate dataframe from PAE data and save to csv
-        pd_PAE = pd.DataFrame(self.PAE)
-        pd_PAE.to_csv('{}/{}_PAE.csv'.format(self.saving_pathname, self.saving_filename))
-
-        return 
 
     # Generate a ChimeraX attribute file from pLDDT measurements   
     def write_pLDDT_file(self):
@@ -163,26 +196,7 @@ class AlphaFoldPickle:
 
         return pd_lDDT
 
-    # Generate a plot of pLDDT value
-    def plot_pLDDT(self, size_in_inches=12, axis_label_increment=100):
-        x = list(range(0,len(self.pLDDT),1))
-        y = list(self.pLDDT)
-
-        # Use standard AlphaFold colors 
-        cmap = cols.LinearSegmentedColormap.from_list("", ["red","orange","yellow","cornflowerblue","blue"])
-
-        plt.figure(figsize=(size_in_inches,(size_in_inches/2)))
-        ticks = np.arange(0, len(self.pLDDT), axis_label_increment)
-        plt.xticks(ticks, fontname="Helvetica")
-        plt.yticks(fontname="Helvetica")
-        plt.xlabel("Residue index", size=14, fontweight="bold", fontname="Helvetica")
-        plt.ylabel("Predicted LDDT",size=14, fontweight="bold", fontname="Helvetica")
-        plt.scatter(x,y, c=y, cmap=cmap, s=5) 
-        plt.clim(0,100)
-        scale = plt.colorbar(shrink=0.5)
-        scale.set_label(label="Predicted LDDT",size=12, fontweight="bold", fontname="Helvetica")
-        # Save to directory with pickle file in
-        plt.savefig('{}/{}_pLDDT.png'.format(self.saving_pathname, self.saving_filename), dpi=300)
+   
 
 
 
@@ -198,4 +212,41 @@ class AlphaFoldJson:
         except:
             exit("To use batch processing, please ensure that the ranking_debug.json file and the result_model_n.pkl files are present in the directory issued in the command. Exiting AlphaPickle now...")
 
-        
+
+class AlphaFoldPDB(AlphaFoldMetaData):
+    def loadCleanStructure(self,  id, filePath):
+        standardResidues = ["ALA","ARG","ASN","ASP","CYS","GLU","GLN","GLY","HIS","ILE","LEU","LYS","MET","PHE","PRO","SER","THR","TRP","TYR","VAL"]
+
+        parser = pdb.PDBParser()
+        parsedStructure = parser.get_structure(id, filePath)
+        for chain in parsedStructure.get_chains():
+            removeResidues = list()
+            for i, residue in enumerate(chain.get_residues()):
+                if residue.resname not in standardResidues:
+                    removeResidues.append(residue.id)
+                    print(residue.id)
+            [chain.detach_child(id) for id in removeResidues]
+    
+        return parsedStructure
+
+
+    def extractPLDDT(self, PDBobject):
+        pLDDT = []
+        for residue in PDBobject.get_residues():
+            i = 0
+            for atom in residue.get_atoms():
+                while i < 1:
+                    pLDDT.append(atom.bfactor)
+                    i+=1
+        pLDDT_series = pd.Series(pLDDT)
+        return pLDDT_series
+
+    def __init__(self, PathToFile, FastaSequence=None, ranking=None):
+        super().__init__(PathToFile)
+        # Define attributes
+        if ranking:
+            self.saving_filename = "ranked_{}".format(ranking)
+        self.structure = self.loadCleanStructure("test", PathToFile)
+        self.pLDDT = self.extractPLDDT(self.structure)
+        self.data = []
+        self.PAE = None
