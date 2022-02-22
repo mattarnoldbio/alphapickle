@@ -61,8 +61,10 @@ if __name__ == '__main__':
         print("\n")
         results = ap.AlphaFoldPickle(args.pickle_file,args.fasta_file)
         results.write_pLDDT_file()
+        print("Plotting pLDDT and saving to csv")
         results.plot_pLDDT(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
         if type(results.PAE) == np.ndarray:
+            print("Plotting PAE and saving to csv")
             results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
     
     if args.output_directory and not args.pickle_file and not args.pdb_file:
@@ -73,20 +75,26 @@ if __name__ == '__main__':
             print("Processing ranked model {} (result_{}).".format(str(model[0]),model[1]))
             results = ap.AlphaFoldPickle(args.output_directory + "/result_" + model[1] + ".pkl", ranking=str(model[0]))
             results.write_pLDDT_file()
+            print("Plotting pLDDT and saving to csv")
             results.plot_pLDDT(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
             if type(results.PAE) == np.ndarray:
                 results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
+                print("Plotting PAE and saving to csv")
             print("\n")
 
     if args.pdb_file and not args.pickle_file and not args.output_directory:
+        print("Reading PDB")
         results = ap.AlphaFoldPDB(args.pdb_file)
+        print("Plotting pLDDT and saving to csv")
         results.plot_pLDDT(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
     
     if args.pae_json_file and not args.pickle_file and not args.output_directory:
+        print("Reading JSON file")
         results = ap.AlphaFoldPAEJson(args.pae_json_file)
+        print("Plotting PAE and saving to csv")
         results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
 
-    else:
+    if (args.output_directory and (args.pickle_file or args.pdb_file or args.pae_json_file)) or  ((args.pdb_file or args.pae_json_file) and (args.output_directory or args.pickle_file)):
         exit("Incorrect combination of files provided. Please check inputs contain exactly one of pickle_file and output_directory")
 
     print("Processing complete!")
