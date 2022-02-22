@@ -22,6 +22,7 @@
 
 # Import dependencies
 import pickle as pkl
+from zipfile import Path
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt ,colors as cols ,cm as cm
@@ -250,3 +251,29 @@ class AlphaFoldPDB(AlphaFoldMetaData):
         self.pLDDT = self.extractPLDDT(self.structure)
         self.data = []
         self.PAE = None
+
+class AlphaFoldPAEJson(AlphaFoldMetaData):
+    def extractPAEfromJson(self, PathToFile):
+        
+        with open(PathToFile, 'r') as file:
+            jsonstring = json.load(file)
+
+            residue1 = jsonstring[0]['residue1']
+            residue2 = jsonstring[0]['residue2']
+            pae = jsonstring[0]['distance']
+
+
+        paeArray = np.ones((max(residue1),(max(residue2))))
+
+        for i, j, n in zip(residue1,residue2,pae):
+            paeArray[int(i-1),int(j-1)] = n
+
+        return paeArray
+
+    def __init__(self, PathToFile, FastaSequence=None, ranking=None):
+        super().__init__(PathToFile)
+        if ranking:
+            self.saving_filename = "ranked_{}".format(ranking)
+
+        self.PAE = self.extractPAEfromJson(PathToFile)
+        self.pLDDT = None

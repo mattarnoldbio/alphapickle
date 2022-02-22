@@ -38,6 +38,7 @@ if __name__ == '__main__':
     parser.add_argument("-pf","--pickle_file", help='Filename of metadata file for processing.', default=None)
     parser.add_argument("-ff","--fasta_file", help='Optional. Filename of fasta sequence file used for AlphaFold prediction.', default=None)
     parser.add_argument("-pdb","--pdb_file", help='Optional. Provide the absolute file path of an AlphaFold PDB file (v2.0.1 or later) to produce a pLDDT plot fomr the b-factor column', default=None)
+    parser.add_argument("-json", "--pae_json_file", help='Optional. Provide a json file containing PAE values, of the type produced by the DeepMind AlphaFold colab notebook', default=None)
     parser.add_argument("-ps","--plot_size", help='Optional (Default = 12). Change size (in inches) of plots. This may be useful for very short or long input sequences', default=12)
     parser.add_argument("-pi","--plot_increment", help='Optional (Default = 100). Change the increment of plot axis labels using residue numbering. This may be useful for very short or long input sequences', default=100)
     args = parser.parse_args()
@@ -52,8 +53,6 @@ if __name__ == '__main__':
                                  
     """)
 
-    # if (args.output_directory and args.pickle_file) or (not args.output_directory and not args.pickle_file):
-    #     exit("Incorrect combination of files provided. Please check inputs contain exactly one of pickle_file and output_directory")
 
     if args.pickle_file and not args.output_directory and not args.pdb_file:
         print("Processing 1 metadata file {}".format(args.pickle_file))
@@ -76,9 +75,17 @@ if __name__ == '__main__':
             if type(results.PAE) == np.ndarray:
                 results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
             print("\n")
+
     if args.pdb_file and not args.pickle_file and not args.output_directory:
         results = ap.AlphaFoldPDB(args.pdb_file)
         results.plot_pLDDT(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
+    
+    if args.pae_json_file and not args.pickle_file and not args.output_directory:
+        results = ap.AlphaFoldPAEJson(args.pae_json_file)
+        results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
+
+    else:
+        exit("Incorrect combination of files provided. Please check inputs contain exactly one of pickle_file and output_directory")
 
     print("Processing complete!")
     print("Data saved to output directory")
