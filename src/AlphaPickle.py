@@ -87,8 +87,7 @@ class AlphaFoldMetaData(object):
 class AlphaFoldPickle(AlphaFoldMetaData):
 
     def __init__(self, PathToFile, FastaSequence=None, ranking=None):
-        super().__init__(PathToFile, ranking)
-        # Define attributes
+        super().__init__(PathToFile, FastaSequence, ranking)        # Define attributes
         if ranking:
             self.saving_filename = "ranked_{}".format(ranking)
         self.data = []
@@ -243,7 +242,7 @@ class AlphaFoldPDB(AlphaFoldMetaData):
         return pLDDT_series
 
     def __init__(self, PathToFile, FastaSequence=None, ranking=None):
-        super().__init__(PathToFile)
+        super().__init__(PathToFile,FastaSequence,ranking)
         # Define attributes
         if ranking:
             self.saving_filename = "ranked_{}".format(ranking)
@@ -271,7 +270,7 @@ class AlphaFoldPAEJson(AlphaFoldMetaData):
         return paeArray
 
     def __init__(self, PathToFile, FastaSequence=None, ranking=None):
-        super().__init__(PathToFile)
+        super().__init__(PathToFile,FastaSequence,ranking)
         if ranking:
             self.saving_filename = "ranked_{}".format(ranking)
 

@@ -54,7 +54,7 @@ if __name__ == '__main__':
     rankings = ap.AlphaFoldJson(args.output_directory).RankingDebug
     for model in rankings:
         print("Processing ranked model {} (result_{}).".format(str(model[0]),model[1]))
-        results = ap.AlphaFoldPickle(args.output_directory + "/result_" + model[1] + ".pkl", ranking=str(model[0]))
+        results = ap.AlphaFoldPickle(args.output_directory + "/result_" + model[1] + ".pkl",args.fasta_file,ranking=str(model[0]))
         results.write_pLDDT_file()
         results.plot_pLDDT(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
         if type(results.PAE) == np.ndarray:
