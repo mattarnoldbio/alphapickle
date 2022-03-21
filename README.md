@@ -1,5 +1,5 @@
 # AlphaPickle [![DOI](https://zenodo.org/badge/429171188.svg)](https://zenodo.org/badge/latestdoi/429171188)
-Version : 1.5.0
+Version : 1.5.1
 
 Author : Matt Arnold (m.arnold.1@research.gla.ac.uk)
 Date : 16-Nov-21
@@ -31,4 +31,4 @@ ALPHAPICKLE is a programme for extracting the outputs of DeepMind's ALPHAFOLD pr
 - If you use AlphaPickle in your work (during analysis, or for plots that end up in publications), please cite AlphaPickle as follows: Arnold, M. J. (2021) AlphaPickle doi.org/10.5281/zenodo.5708709
 
 # Changes
- - Bug fix at /src/AlphaPickle.py-line163: fix broken reference to dataframe.
+ - pLDDT to csv from pdb file

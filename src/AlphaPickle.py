@@ -1,9 +1,9 @@
 ### AlphaPickle ###
-### Version 1.5.0 ###
+### Version 1.5.1 ###
 ### Author: Matt Arnold ###
 # AlphaPickle extracts results metadata from pickle (.pkl) files created by DeepMind's AlphaFold (Jumper et al., 2021, doi: 10.1038/s41586-021-03819-2)
 # For detailed usage and installation instructions, please consult README.alphapickle
-# New in this version: bug fix @ AlphaPickle.py-line163
+# New in this version: pLDDT to csv from pdb file
 
 # Copyright (C) 2021  Matt Arnold
 
@@ -250,6 +250,17 @@ class AlphaFoldPDB(AlphaFoldMetaData):
         self.pLDDT = self.extractPLDDT(self.structure)
         self.data = []
         self.PAE = None
+
+    def PDB_write_pLDDT(self):
+        residueNumbers = pd.Series(range(1,len(self.pLDDT)+1))
+        if len(residueNumbers) != len(self.pLDDT):
+            print("Oops")
+        else:
+            pd_lDDT = pd.DataFrame(self.pLDDT)
+            pd_lDDT.columns= ["pLDDT"]
+            pd_lDDT.insert(0,"Residue",residueNumbers)
+            pd_lDDT.to_csv('{}/{}_pLDDT.csv'.format(self.saving_pathname, self.saving_filename))
+
 
 class AlphaFoldPAEJson(AlphaFoldMetaData):
     def extractPAEfromJson(self, PathToFile):
