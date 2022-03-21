@@ -4,12 +4,27 @@ Version : 1.5.1
 Author : Matt Arnold (m.arnold.1@research.gla.ac.uk)
 Date : 16-Nov-21
 
-ALPHAPICKLE is a programme for extracting the outputs of DeepMind's ALPHAFOLD protein prediction algorithm (Jumper et al., 2021, 10.1038/s41586-021-03819-2) from the pickle (.pkl) file output.
-- Currently, the outputs of the programme are: a plot of the predicted aligned error (PAE), a ChimeraX attribute file for colouring the outputted models by pLDDT value and csv files containing the predicted aligned error and per-residue confidence in the predicted model (expressed as local distance difference test (lDDT) values, as well as plots of these two metrics, saved as .png files; see Mariani et al., 2013 10.1093/bioinformatics/btt473). Consult the original publication for details on the importance of these data. Other metadata contained in the .pkl are described at  https://github.com/deepmind/alphafold/blob/main/README.md. If you would like to see any of these added to future version, please get in contact.
+ALPHAPICKLE is a programme for extracting the outputs of DeepMind's ALPHAFOLD protein prediction algorithm (Jumper et al., 2021, 10.1038/s41586-021-03819-2).
+
+AlphaPickle is multipurpose Python script for producing plots and user-legible files from the output of AlphaFold2 (notebook) and Colabfold (notebook).
+
+The functions provided here aim to tackle the problem of output metadata from these programs being difficult to process for users who don't have Python training. Currently, PAE outputs from AlphaFold 2.1.0 are in the form of .pkl files, which can only be read using a Python script. For data from AlphaFold DB and ColabFold, these data are in .json format (not typically easy to process for non-code writing users).
+
+For all of the above software, pLDDT values are outputted in the B-factor field of the PDB file for each prediction. This is very useful for visualisation (e.g. using the ChimeraX command color bfactor palette alphafold), but may be difficult in terms of customisable visualisation for non-code writing users.
+
+This collection of code will take any of the above output files and provide a .csv file (which can be opened and used for plotting in Excel, Numbers, Google Sheets) as well as a downloadable plot.
+
+- Currently, the outputs of the programme are: csv files containing the predicted aligned error and per-residue confidence in the predicted model (expressed as local distance difference test (lDDT) values, as well as plots of these two metrics, saved as .png files; see Mariani et al., 2013 10.1093/bioinformatics/btt473). Consult the original publication for details on the importance of these data. Other metadata contained in the .pkl are described at  https://github.com/deepmind/alphafold/blob/main/README.md. If you would like to see any of these added to future version, please get in contact.
 - For details on how to setup and use ALPHAPICKLE, see below.
 
 # Use
 
+- EASIEST: visit the Colab page at https://colab.research.google.com/github/mattarnoldbio/alphapickle/blob/main/AlphaPickle.ipynb
+    - No command line interaction required
+    - No system configuration or Python package installation required
+    - Local installation is now probably only necessary if only .pkl files are available for metadata, as the size of these may be prohibitively large when considering upload to Colab.
+
+- Local use:
 - The program has two basic options: input a single metadata file (by issuing the the absolute path to the file with the flag -pf), or process metadata for all models output by a run of AlphaFold (by issuing the absolute path to the results directory, which must contain both the ranking_debug.json file and all of the result_model*.pkl files). For each metadata file processed, the outputs (plots and tables of pLDDT and PAE, as well as a ChimeraX attribute file for pLDDT) are saved to the same directory as the input files.
 - In version 1.5.0, functionality has been added to allow processing of the outputs of DeepMind's Colab notebook (plotting pLDDT from the b-factor column of an AlphaFold-generated PDB file and PAE from a JSON file). This function will also be useful if using data from AlphaFoldDB.
 - Usage examples:
