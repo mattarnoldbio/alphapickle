@@ -1,10 +1,10 @@
 # This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
+# $ conda create -c conda-forge -c bioconda -c default --name <env> --file <this file>
 # platform: osx-64
-altgraph=0.17.2=pypi_0
+altgraph=0.17.2=pyhd8ed1ab_0
 appnope=0.1.2=py39hecd8cb5_1001
-argcomplete=1.12.3=pypi_0
-argh=0.26.2=pypi_0
+argcomplete=1.12.3=pyhd8ed1ab_2
+argh=0.26.2=pyh9f0ad1d_1002
 backcall=0.2.0=pyhd3eb1b0_0
 biopython=1.79=py39h89e85a6_1
 blas=1.0=mkl
@@ -15,7 +15,9 @@ cycler=0.10.0=py39hecd8cb5_0
 decorator=5.0.9=pyhd3eb1b0_0
 fonttools=4.25.0=pyhd3eb1b0_0
 freetype=2.10.4=ha233b18_0
-gffutils=0.10.1=pypi_0
+gffutils=0.10.1=pyh864c0ab_1
+importlib-metadata=4.11.3=py39h6e9494a_0
+importlib_metadata=4.11.3=hd8ed1ab_0
 intel-openmp=2021.2.0=hecd8cb5_564
 ipykernel=5.3.4=py39h01d92e1_0
 ipython=7.22.0=py39h01d92e1_0
@@ -34,7 +36,7 @@ libsodium=1.0.18=h1de35cc_0
 libtiff=4.2.0=h87d7836_0
 libwebp-base=1.2.0=h9ed2024_0
 lz4-c=1.9.3=h23ab428_1
-macholib=1.15.2=pypi_0
+macholib=1.14=pyh9f0ad1d_1
 matplotlib=3.4.2=py39hecd8cb5_0
 matplotlib-base=3.4.2=py39h8b3ea08_0
 mkl=2021.2.0=hecd8cb5_269
@@ -56,10 +58,10 @@ pillow=8.3.1=py39ha4cf6ea_0
 pip=21.1.2=py39hecd8cb5_0
 prompt-toolkit=3.0.17=pyh06a4308_0
 ptyprocess=0.7.0=pyhd3eb1b0_2
-pyfaidx=0.6.3.1=pypi_0
+pyfaidx=0.6.3.1=pyh5e36f6f_1
 pygments=2.9.0=pyhd3eb1b0_0
-pyinstaller=4.5.1=pypi_0
-pyinstaller-hooks-contrib=2021.3=pypi_0
+pyinstaller=4.5.1=py39h9fd43ae_0
+pyinstaller-hooks-contrib=2022.2=pyhd8ed1ab_0
 pyparsing=2.4.7=pyhd3eb1b0_0
 python=3.9.5=h88f2d9e_3
 python-dateutil=2.8.1=pyhd3eb1b0_0
@@ -70,7 +72,7 @@ readline=8.1=h9ed2024_0
 scipy=1.6.2=py39hd5f7400_1
 seaborn=0.11.2=pyhd3eb1b0_0
 setuptools=52.0.0=py39hecd8cb5_0
-simplejson=3.17.5=pypi_0
+simplejson=3.17.6=py39h89e85a6_0
 six=1.16.0=pyhd3eb1b0_0
 sqlite=3.35.4=hce871da_0
 tk=8.6.10=hb0a8c7a_0
@@ -81,5 +83,6 @@ wcwidth=0.2.5=py_0
 wheel=0.36.2=pyhd3eb1b0_0
 xz=5.2.5=h1de35cc_0
 zeromq=4.3.4=h23ab428_0
+zipp=3.7.0=pyhd8ed1ab_1
 zlib=1.2.11=h1de35cc_3
 zstd=1.4.9=h322a384_0
