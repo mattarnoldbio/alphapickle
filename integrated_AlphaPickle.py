@@ -1,5 +1,5 @@
 ### AlphaPickle ###
-### Version 1.2.1 ###
+### Version 1.5.2 ###
 ### Author: Matt Arnold ###
 # AlphaPickle extracts results metadata from pickle (.pkl) files created by DeepMind's AlphaFold (Jumper et al., 2021, doi: 10.1038/s41586-021-03819-2)
 # For detailed usage and installation instructions, please consult README.alphapickle
@@ -27,7 +27,7 @@ import numpy as np
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="AlphaPickle\n"
-    "Version 1.4.0\n"
+    "Version 1.5.2\n"
     "Input the location of an AlphaFold output directory and generate \n"
     "a PAE plot (if pTM models were used), a pLDDT plot and a ChimeraX attribute file \n"
     "containing pLDDT data for each model. Both of these metrics are also exported to \n"
@@ -51,14 +51,16 @@ if __name__ == '__main__':
                                  
     """)
 
+    plot_increment = int(args.plot_increment)
+
     rankings = ap.AlphaFoldJson(args.output_directory).RankingDebug
     for model in rankings:
         print("Processing ranked model {} (result_{}).".format(str(model[0]),model[1]))
         results = ap.AlphaFoldPickle(args.output_directory + "/result_" + model[1] + ".pkl",args.fasta_file,ranking=str(model[0]))
         results.write_pLDDT_file()
-        results.plot_pLDDT(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
+        results.plot_pLDDT(size_in_inches=args.plot_size, axis_label_increment=plot_increment)
         if type(results.PAE) == np.ndarray:
-            results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=args.plot_increment)
+            results.plot_PAE(size_in_inches=args.plot_size, axis_label_increment=plot_increment)
         print("\n")
         
     print("Processing complete!")

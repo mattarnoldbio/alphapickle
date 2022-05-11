@@ -1,5 +1,5 @@
 # AlphaPickle [![DOI](https://zenodo.org/badge/429171188.svg)](https://zenodo.org/badge/latestdoi/429171188)
-Version : 1.5.1
+Version : 1.5.2
 
 Author : Matt Arnold (m.arnold.1@research.gla.ac.uk)
 Date : 16-Nov-21

@@ -1,5 +1,5 @@
 ### AlphaPickle ###
-### Version 1.5.1 ###
+### Version 1.5.2 ###
 ### Author: Matt Arnold ###
 # AlphaPickle extracts results metadata from pickle (.pkl) files created by DeepMind's AlphaFold (Jumper et al., 2021, doi: 10.1038/s41586-021-03819-2)
 # For detailed usage and installation instructions, please consult README.alphapickle
