@@ -267,18 +267,24 @@ class AlphaFoldPAEJson(AlphaFoldMetaData):
         
         with open(PathToFile, 'r') as file:
             jsonstring = json.load(file)
+            if 'predicted_aligned_error' in jsonstring[0]:
+                pae = jsonstring[0]['predicted_aligned_error']
+            else:
+                residue1 = jsonstring[0]['residue1']
+                residue2 = jsonstring[0]['residue2']
+                pae = jsonstring[0]['distance']
 
-            residue1 = jsonstring[0]['residue1']
-            residue2 = jsonstring[0]['residue2']
-            pae = jsonstring[0]['distance']
 
+        if 'predicted_aligned_error' in jsonstring[0]:
+            paeArray = np.array(pae)
+        else:
+            paeArray = np.ones((max(residue1),(max(residue2))))
+            for i, j, n in zip(residue1,residue2,pae):
+                paeArray[int(i-1),int(j-1)] = n
 
-        paeArray = np.ones((max(residue1),(max(residue2))))
-
-        for i, j, n in zip(residue1,residue2,pae):
-            paeArray[int(i-1),int(j-1)] = n
 
         return paeArray
+
 
     def __init__(self, PathToFile, FastaSequence=None, ranking=None):
         super().__init__(PathToFile,FastaSequence,ranking)
