@@ -1,0 +1,5 @@
+Bio==1.5.3
+matplotlib==3.5.2
+numpy==1.23.1
+pandas==1.4.4
+scipy==1.9.1
