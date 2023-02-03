@@ -41,7 +41,7 @@ if __name__ == '__main__':
     parser.add_argument("-ff","--fasta_file", help='Optional. Filename of fasta sequence file used for AlphaFold prediction.', default=None)
     parser.add_argument("-pdb","--pdb_file", help='Optional. Provide the absolute file path of an AlphaFold PDB file (v2.0.1 or later) to produce a pLDDT plot fomr the b-factor column', default=None)
     parser.add_argument("-json", "--pae_json_file", help='Optional. Provide a json file containing PAE values, of the type produced by the DeepMind AlphaFold colab notebook', default=None)
-    parser.add_argument("-ps","--plot_size", help='Optional (Default = 12). Change size (in inches) of plots. This may be useful for very short or long input sequences', default=12)
+    parser.add_argument("-ps","--plot_size", help='Optional (Default = 12). Change size (in inches) of plots. This may be useful for very short or long input sequences', default=12, type=float)
     parser.add_argument("-pi","--plot_increment", help='Optional (Default = 100). Change the increment of plot axis labels using residue numbering. This may be useful for very short or long input sequences', default=100)
     args = parser.parse_args()
 
