@@ -1,10 +1,10 @@
 # AlphaPickle [![DOI](https://zenodo.org/badge/429171188.svg)](https://zenodo.org/badge/latestdoi/429171188)
-Version : 1.5.3
+Version : 1.5.4
 
 Author : Matt Arnold (m.arnold.1@research.gla.ac.uk)
 Date : 27-Jan-23
 
-UPDATES: bug fix in the handling of new format of PAE json files
+UPDATES: bug fix in the handling of command line arguments
 
 ALPHAPICKLE is a programme for extracting the outputs of DeepMind's ALPHAFOLD protein prediction algorithm (Jumper et al., 2021, 10.1038/s41586-021-03819-2).
 
