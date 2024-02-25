@@ -29,7 +29,7 @@ from matplotlib import pyplot as plt ,colors as cols ,cm as cm
 import json
 from sys import exit
 from Bio import PDB as pdb
-
+import os
 
 # Define class for AlphaFold metadata file and class methods
 class AlphaFoldMetaData(object):
@@ -39,6 +39,8 @@ class AlphaFoldMetaData(object):
         self.FastaSequence = FastaSequence
         self.saving_filename = self.PathToFile.split("/")[-1].split(".")[0]
         self.saving_pathname = self.PathToFile.split(self.saving_filename)[0]
+        if self.saving_pathname == "":
+            self.saving_pathname = os.getcwd()
         if ranking:
             self.saving_filename = "ranked_{}".format(ranking)
 
